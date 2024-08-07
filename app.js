@@ -2,12 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 
 const app = express();
 
 // Middleware
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -15,7 +16,8 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // Database Connection
-const dbURI = 'mongodb://localhost:27017/carRecordsDB';
+// const dbURI = 'mongodb://localhost:27017/carRecordsDB';
+const dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI, {
     useNewUrlParser: true,

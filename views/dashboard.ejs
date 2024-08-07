@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <h2>Total Cars: <%= totalCars %></h2>
+    <a href="/logout">Logout</a>
+    <h3>Add New Car</h3>
+    <form action="/dashboard/add" method="POST">
+        <input type="text" name="name" placeholder="Car Name" required>
+        <input type="number" name="year" placeholder="Manufacturing Year" required>
+        <input type="number" name="price" placeholder="Price" required>
+        <button type="submit">Add Car</button>
+    </form>
+
+    <h3>Cars List</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Car Name</th>
+                <th>Year</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% cars.forEach(car => { %>
+            <tr>
+                <td><%= car.name %></td>
+                <td><%= car.year %></td>
+                <td><%= car.price %></td>
+                <td>
+                    <form action="/dashboard/edit/<%= car._id %>" method="POST" style="display:inline;">
+                        <input type="text" name="name" value="<%= car.name %>" required>
+                        <input type="number" name="year" value="<%= car.year %>" required>
+                        <input type="number" name="price" value="<%= car.price %>" required>
+                        <button type="submit">Edit</button>
+                    </form>
+                    <form action="/dashboard/delete/<%= car._id %>" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
